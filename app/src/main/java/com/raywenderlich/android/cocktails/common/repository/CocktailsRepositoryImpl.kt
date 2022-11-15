@@ -8,10 +8,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val HIGH_SCORE_KEY = "HIGH_SCORE_KEY"
+
 class CocktailsRepositoryImpl(
 
   private val api: CocktailsApi,
-  sharedPreferences: SharedPreferences
+  private val sharedPreferences: SharedPreferences
 
 ) : CocktailsRepository {
 
@@ -24,7 +26,9 @@ class CocktailsRepositoryImpl(
   }
 
   override fun saveHighScore(score: Int) {
-    TODO("Not yet implemented")
+    val editor = sharedPreferences.edit()
+    editor.putInt(HIGH_SCORE_KEY, score)
+    editor.apply()
   }
 
   private fun wrapCallback(callback: RepositoryCallback<List<Cocktail>, String>) =

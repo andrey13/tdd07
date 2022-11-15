@@ -8,10 +8,12 @@ import org.mockito.kotlin.*
 class RepositoryUnitTests {
 
     @Test
-    fun saveScore_shouldSaveToSharedPreferences() {
+    fun `save score should save to shared preferences`() {
 
         val api: CocktailsApi = mock()
+
         val sharedPreferencesEditor: SharedPreferences.Editor = mock()
+
         val sharedPreferences: SharedPreferences = mock()
         whenever(sharedPreferences.edit())
             .thenReturn(sharedPreferencesEditor)
@@ -22,8 +24,11 @@ class RepositoryUnitTests {
         repository.saveHighScore(score)
 
         inOrder(sharedPreferencesEditor) {
-            verify(sharedPreferencesEditor).putInt(any(), eq(score))
-            verify(sharedPreferencesEditor).apply()
+            verify(sharedPreferencesEditor)
+                .putInt(any(), eq(score))
+
+            verify(sharedPreferencesEditor)
+                .apply()
         }
     }
 }

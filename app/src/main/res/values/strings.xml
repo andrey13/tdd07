@@ -1,0 +1,13 @@
+<resources>
+  <string name="app_name">Cocktails</string>
+  <string name="main_title">Cocktails</string>
+  <string name="game_next">Next</string>
+  <string name="error_default_text">Error</string>
+  <string name="error_retry_default_text">Retry</string>
+  <string name="loading_default_text">Loading</string>
+  <string name="no_results_default_text">No results</string>
+  <string name="game_no_questions_left">No questions left</string>
+  <string name="game_score">Score: %1$d</string>
+  <string name="game_highscore">Highscore: %1$d</string>
+  <string name="game_question_title">What is the name of this cocktail?</string>
+</resources>

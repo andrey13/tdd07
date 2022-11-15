@@ -16,7 +16,9 @@ class CocktailsGameFactoryImpl(
             object : RepositoryCallback<List<Cocktail>, String> {
 
                 override fun onSuccess(cocktailList: List<Cocktail>) {
-                    callback.onSuccess(Game(emptyList()))
+                    val score = Score(repository.getHighScore())
+                    val game = Game(emptyList(), score)
+                    callback.onSuccess(game)
                 }
 
                 override fun onError(e: String) {

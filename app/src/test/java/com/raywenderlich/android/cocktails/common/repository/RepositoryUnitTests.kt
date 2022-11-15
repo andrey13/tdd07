@@ -2,23 +2,31 @@ package com.raywenderlich.android.cocktails.common.repository
 
 import android.content.SharedPreferences
 import com.raywenderlich.android.cocktails.common.network.CocktailsApi
+import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.*
 
 class RepositoryUnitTests {
 
+    private lateinit var repository: CocktailsRepository
+    private lateinit var api: CocktailsApi
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
+
+    @Before
+    fun setup() {
+        api = mock()
+
+        sharedPreferences = mock()
+
+        sharedPreferencesEditor = mock()
+        whenever(sharedPreferences.edit()).thenReturn(sharedPreferencesEditor)
+
+        repository = CocktailsRepositoryImpl(api, sharedPreferences)
+    }
+
     @Test
     fun `save score should save to shared preferences`() {
-
-        val api: CocktailsApi = mock()
-
-        val sharedPreferencesEditor: SharedPreferences.Editor = mock()
-
-        val sharedPreferences: SharedPreferences = mock()
-        whenever(sharedPreferences.edit())
-            .thenReturn(sharedPreferencesEditor)
-
-        val repository = CocktailsRepositoryImpl(api, sharedPreferences)
         val score = 100
 
         repository.saveHighScore(score)
@@ -34,10 +42,6 @@ class RepositoryUnitTests {
 
     @Test
     fun `get score should get from shared preferences`() {
-        val api: CocktailsApi = mock()
-        val sharedPreferences: SharedPreferences = mock()
-        val repository = CocktailsRepositoryImpl(api, sharedPreferences)
-
         repository.getHighScore()
         verify(sharedPreferences).getInt(any(), any())
     }

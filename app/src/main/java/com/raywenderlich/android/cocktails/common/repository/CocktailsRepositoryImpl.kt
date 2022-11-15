@@ -26,9 +26,13 @@ class CocktailsRepositoryImpl(
   }
 
   override fun saveHighScore(score: Int) {
+    val highScore = getHighScore()
     val editor = sharedPreferences.edit()
-    editor.putInt(HIGH_SCORE_KEY, score)
-    editor.apply()
+
+    if (score > highScore) {
+      editor.putInt(HIGH_SCORE_KEY, score)
+      editor.apply()
+    }
   }
 
   override fun getHighScore(): Int = sharedPreferences.getInt(HIGH_SCORE_KEY, 0)

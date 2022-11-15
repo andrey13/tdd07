@@ -45,4 +45,20 @@ class RepositoryUnitTests {
         repository.getHighScore()
         verify(sharedPreferences).getInt(any(), any())
     }
+
+    @Test
+    fun `save score should not save to shared preferences if lower`() {
+        val previouslySavedHighScore = 100
+        val newHighScore = 10
+        val spyRepository = spy(repository)
+
+        doReturn(previouslySavedHighScore)
+            .whenever(spyRepository)
+            .getHighScore()
+
+        spyRepository.saveHighScore(newHighScore)
+
+        verify(sharedPreferencesEditor, never())
+            .putInt(any(), eq(newHighScore))
+    }
 }

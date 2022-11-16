@@ -1,4 +1,4 @@
-package com.raywenderlich.android.cocktails.game
+package com.raywenderlich.android.cocktails.game.model
 
 class Score(highestScore: Int = 0) {
 

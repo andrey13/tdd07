@@ -1,6 +1,5 @@
 package com.raywenderlich.android.cocktails.game.model
 
-import com.raywenderlich.android.cocktails.game.Score
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString

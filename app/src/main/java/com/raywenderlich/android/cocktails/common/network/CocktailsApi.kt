@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.raywenderlich.android.cocktails.BuildConfig
 import com.google.gson.GsonBuilder
 import kotlinx.android.parcel.Parcelize
+//import kotlinx.Parcelize
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

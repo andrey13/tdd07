@@ -1,7 +1,5 @@
 package com.raywenderlich.android.cocktails.game.model
 
-import com.raywenderlich.android.cocktails.game.Score
-
 class Game(
 
   private val questions: List<Question>,

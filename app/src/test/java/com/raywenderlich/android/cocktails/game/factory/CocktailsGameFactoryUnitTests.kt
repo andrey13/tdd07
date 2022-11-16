@@ -6,6 +6,7 @@ import com.raywenderlich.android.cocktails.common.repository.RepositoryCallback
 import com.raywenderlich.android.cocktails.game.CocktailsGameFactory
 import com.raywenderlich.android.cocktails.game.CocktailsGameFactoryImpl
 import com.raywenderlich.android.cocktails.game.model.Game
+import com.raywenderlich.android.cocktails.game.model.Question
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -68,14 +69,14 @@ class CocktailsGameFactoryUnitTests {
     }
 
     @Test
-    fun buildGame_shouldGetHighScoreFromRepo() {
+    fun `buildGam  should get high score from repo`() {
         setUpRepositoryWithCocktails(repository)
         factory.buildGame(mock())
         verify(repository).getHighScore()
     }
 
     @Test
-    fun buildGame_shouldBuildGameWithHighScore() {
+    fun `buildGame should build game with high score`() {
 
         setUpRepositoryWithCocktails(repository)
 
@@ -88,5 +89,35 @@ class CocktailsGameFactoryUnitTests {
 
             override fun onError() = Assert.fail()
         })
+    }
+
+    @Test
+    fun `buildGame should build game with questions`() {
+        setUpRepositoryWithCocktails(repository)
+
+        factory.buildGame(object : CocktailsGameFactory.Callback {
+            override fun onSuccess(game: Game) {
+                cocktails.forEach {
+                    assertQuestion(
+                        game.nextQuestion(),
+                        it.strDrink,
+                        it.strDrinkThumb
+                    )
+                }
+            }
+
+            override fun onError() = Assert.fail()
+        })
+    }
+
+    private fun assertQuestion(
+        question: Question?,
+        correctOption: String,
+        imageUrl: String?
+    ) {
+        Assert.assertNotNull(question)
+        Assert.assertEquals (imageUrl, question?.imageUrl)
+        Assert.assertEquals(correctOption, question?.correctOption)
+        Assert.assertNotEquals(correctOption, question?.incorrectOption)
     }
 }

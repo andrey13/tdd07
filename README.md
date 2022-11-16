@@ -18,14 +18,14 @@ By Fernando Sproviero
 
 - Во-вторых, запустите метод, который вы хотите протестировать.
 
-- Наконец, проверьте результат, проверив состояние тестируемого объекта. Это называется  проверкой  состояния  или  тестированием  методом  черного  ящика. Это то, что вы сделали с помощью JUnit.
+- Наконец, проверьте результат, проверив состояние тестируемого объекта. Это называется  проверкой  состояния  или  тестированием  методом  черного  ящика. Это то, что вы сделали с помощью `JUnit`.
 
 Однако для выполнения проверки состояния иногда тестируемый объект должен взаимодействовать  с  другим.  Поскольку  вы  хотите  сосредоточиться  на  первом объекте,  на  этапе  настройки  вы  хотите  предоставить  тестируемому  двойному соавтору  тестируемый  объект.  Этот  поддельный  соавтор  предназначен  только для  целей  тестирования,  и  вы  настраиваете  его,  чтобы  он  вел  себя  так,  как  вы хотите. Например, вы можете сделать макет, чтобы вызов метода на нем всегда возвращал  одну  и  ту  же  жестко  запрограммированную  строку.  Это  называется заглушкой метода. Для этого вы будете использовать Mockito.
 
 Существует  еще  один  тип  проверки,  называемый  проверкой  поведения  или тестированием белого ящика. Здесь вы хотите убедиться, что ваш тестируемый объект будет вызывать определенные методы совместной работы. Например, у вас может быть объект репозитория, который извлекает данные из сети и перед возвратом  результатов  вызывает  объект-сотрудник,  чтобы  сохранить  их  в  базе данных. Опять же, вы можете использовать Mockito, чтобы следить за соавтором и проверять, вызывались ли для него определенные методы.
 
-> [!NOTE]
-**Примечание**. Использование тестирования «белого ящика» позволяет вам быть более точными в тестах, но часто приводит к необходимости вносить дополнительные изменения в тесты при изменении производственного кода.
+> [!NOTE] **Примечание**
+> Использование тестирования «белого ящика» позволяет вам быть более точными в тестах, но часто приводит к необходимости вносить дополнительные изменения в тесты при изменении производственного кода.
 
 ## Настройка Мохито
 
@@ -38,7 +38,7 @@ dependencies {
 } 
 ```
 
-Mockito-Kotlin  —  это  библиотека-оболочка  вокруг  Mockito.  Он  предоставляет функции верхнего уровня, позволяющие использовать подход, более похожий на  Kotlin,  а  также  решает  несколько  проблем  с  использованием  библиотеки Mockito Java в Kotlin.
+Mockito-Kotlin  —  это  библиотека-оболочка  вокруг  `Mockito`.  Он  предоставляет функции верхнего уровня, позволяющие использовать подход, более похожий на  Kotlin,  а  также  решает  несколько  проблем  с  использованием  библиотеки `Mockito` Java в Kotlin.
 
 
 ## Создание юнит-тестов с помощью Mockito
@@ -65,26 +65,27 @@ fun whenAnswering_shouldDelegateToQuestion() {
 } 
 ```
 
->[!NOTE]
-**Примечание**.  При  импорте  функций  mock,  verify,  times  и  eq  следует выбрать вариант, начинающийся с org.mockito.kotlin.*, чтобы использовать функции из библиотеки Mockito-Kotlin вместо org.mockito.Mockito.*, которая имеет свои собственные версии этих функций, но они дадут разные результаты, поскольку они не были разработаны для Kotlin.
+>[!NOTE] **Примечание**  
+>При  импорте  функций  `mock`,  `verify`,  `times`  и  `eq`  следует выбрать вариант, начинающийся с `org.mockito.kotlin.`, чтобы использовать функции из библиотеки `Mockito-Kotlin` вместо `org.mockito.Mockito.`, которая имеет свои собственные версии этих функций, но они дадут разные результаты, поскольку они не были разработаны для `Kotlin`.
 
 В этом тесте:
 
-1.  Методу  игры  answer()  нужен  вопрос,  чтобы  узнать  ответ.  Он  делает  это, передавая вопрос своему методу answer(). Таким образом, вы создаете макет Вопроса, который вы можете позже проверить.
-2. Вызовите метод answer() игры, передав макет Вопроса в качестве параметра.
-3. Убедитесь, что метод answer() был вызван в макете Вопроса. Вы использовали режим  проверки  times(1)  для  проверки  того,  что  метод  answer()  был  вызван ровно  один  раз.  Вы  также  использовали  сопоставитель  аргументов  eq  для проверки того, что метод answer() был вызван со строкой, равной OPTION.
+1.  Методу  игры  `answer()`  нужен  вопрос,  чтобы  узнать  ответ.  Игра  делает  это, передавая вопрос своему методу `answer()`. Таким образом, вы создаете макет `Question`, который вы можете позже проверить.
+2. Вызовите метод `answer()` игры, передав макет `Question` в качестве параметра.
+3. Убедитесь, что метод `answer()` был вызван в макете `Question`. Вы использовали режим  проверки  `times(1)`  для  проверки  того,  что  метод  `answer()`  был  вызван ровно  один  раз.  Вы  также  использовали  сопоставитель  аргументов  `eq`  для проверки того, что метод `answer()` был вызван со строкой, равной `OPTION`.
 
-Вы можете опустить times(1), так как это значение по умолчанию. Поэтому измените код на следующий:
+Вы можете опустить `times(1)`, так как это значение по умолчанию. Поэтому измените код на следующий:
 
 ```kotlin 
 verify(question).answer(eq("OPTION")) 
 ```
 
->[!NOTE] **Примечание**. Существуют также другие режимы проверки, такие как never(), atLeast(),  atMost()  и  другие  средства  сопоставления  аргументов,  такие  как eq(), same(), any(), которые вы можете использовать в зависимости от вашего теста.
+>[!NOTE] **Примечание**
+>Существуют также другие режимы проверки, такие как `never()`, `atLeast()`,  `atMost()`  и  другие  средства  сопоставления  аргументов,  такие  как `eq()`, `same()`, `any()`, которые вы можете использовать в зависимости от вашего теста.
 
-Попробуйте  скомпилировать  и  запустить  тест.  Вы  увидите  ошибку,  потому что в классе Game еще нет метода answer().
+Попробуйте  скомпилировать  и  запустить  тест.  Вы  увидите  ошибку,  потому что в классе Game еще нет метода `answer()`.
 
-Откройте класс Game и создайте метод answer():
+Откройте класс Game и создайте метод `answer()`:
 
 ```kotlin 
 fun answer(question: Question, option: String) { 
@@ -96,11 +97,11 @@ fun answer(question: Question, option: String) {
 
 ![2021AndroidTest-DrivenDevelopmentbyTutorials(LanceGleasonVictoriaGondaFern)RUS_115_138](2021AndroidTest-DrivenDevelopmentbyTutorials(LanceGleasonVictoriaGondaFern)RUS_115_138.png)
 
-Это  связано  с  тем,  что  классы  и  методы  Kotlin  по  умолчанию  являются окончательными.  Mockito  не  будет  работать  с  окончательными  классами/ методами из коробки. Чтобы исправить это, у вас есть следующие варианты:
+Это  связано  с  тем,  что  классы  и  методы  Kotlin  по  умолчанию  являются окончательными.  `Mockito`  не  будет  работать  с  окончательными  классами/методами из коробки. Чтобы исправить это, у вас есть следующие варианты:
 
--  Используйте  встроенное  расширение  mock-maker-inline,  чтобы  позволить  Mockito имитировать окончательные классы/методы.
+-  Используйте  встроенное  расширение  `mock-maker-inline,`  чтобы  позволить  Mockito имитировать окончательные классы/методы.
 
-- Добавляйте ключевое слово open к классам и методам, над которыми вы будете работать.
+- Добавляйте ключевое слово `open` к классам и методам, над которыми вы будете работать.
 
 -  Создайте  интерфейс  и  реализуйте  его  в  классе.  Затем  просто  смоделируйте интерфейс (по умолчанию интерфейсы открыты).
 
@@ -109,13 +110,13 @@ fun answer(question: Question, option: String) {
 
 - Перейдите к окну проекта и переключитесь на представление проекта.
 
-- Создайте каталог ресурсов в app > src > test.
+- Создайте каталог ресурсов в `app > src > test`.
 
--  Внутри  ресурсов  создайте  каталог  с  именем  mockitoextensions
+-  Внутри  ресурсов  создайте  каталог  с  именем  `mockitoextensions`
 
--  Добавьте текстовый файл с именем org.mockito.plugins.MockMaker
+-  Добавьте текстовый файл с именем `org.mockito.plugins.MockMaker`
 
-- Добавьте текст mockmaker-inline
+- Добавьте текст `mockmaker-inline`
 
 См. изображение ниже:
 
@@ -125,8 +126,8 @@ fun answer(question: Question, option: String) {
 
 ![2021AndroidTest-DrivenDevelopmentbyTutorials(LanceGleasonVictoriaGondaFern)RUS_116_71](2021AndroidTest-DrivenDevelopmentbyTutorials(LanceGleasonVictoriaGondaFern)RUS_116_71.png)
 
-Здесь он заявляет, что ожидал вызова метода answer() класса Question.
-Итак, теперь исправьте метод answer() с правильной реализацией:
+Здесь он заявляет, что ожидал вызова метода `answer()` класса `Question`.
+Итак, теперь исправьте метод `answer()` с правильной реализацией:
 
 ```kotlin
 fun answer(question: Question, option: String) { 
@@ -149,7 +150,8 @@ fun answer(question: Question, option: String) {
 fun whenAnsweringCorrectly_shouldIncrementCurrentScore() { 
 	// 1 
 	val question = mock<Question>() 
-	whenever(question.answer(anyString())).thenReturn(true) 
+	whenever(question.answer(anyString()))
+		.thenReturn(true) 
 
 	val game = Game(listOf(question)) 
 	
@@ -163,15 +165,16 @@ fun whenAnsweringCorrectly_shouldIncrementCurrentScore() {
 
 В приведенном выше вы:
 
-1. Снова издевался над классом вопросов. Используя when/method/thenReturn, вы заглушаете метод question.answer(), чтобы он всегда возвращал true. Обратите внимание, что здесь вы использовали сопоставитель аргументов anyString(), так как вам все равно, какая конкретная строка вам нужна для заглушки вызова.
+1. Снова издевался над классом вопросов. Используя `when/method/thenReturn`, вы заглушаете метод` question.answer()`, чтобы он всегда возвращал `true`. Обратите внимание, что здесь вы использовали сопоставитель аргументов `anyString()`, так как вам все равно, какая конкретная строка вам нужна для заглушки вызова.
 
->[!NOTE] Примечание.  Здесь  вы  можете  использовать  специальный сопоставитель строк, что сделает тест более надежным.
+>[!NOTE] **Примечание**  
+>Здесь  вы  можете  использовать  специальный сопоставитель строк, что сделает тест более надежным.
 
-2. Вызвать метод answer() игры.
+2. Вызвать метод `answer()` игры.
 
 3. Убедитесь, что счет игры увеличился.
 
-Запустите тест, и вы увидите, что он не работает. Добавьте следующий код в метод answer() класса Game:
+Запустите тест, и вы увидите, что он не работает. Добавьте следующий код в метод `answer()` класса `Game`:
 
 ```kotlin 
 fun answer(question: Question, option: String) { 
@@ -198,9 +201,9 @@ fun whenAnsweringIncorrectly_shouldNotIncrementCurrentScore() {
 } 
 ```
 
-Здесь  вместо  этого  вы  заглушаете  метод  answer(),  чтобы  он  всегда  возвращал  false.
+Здесь  вместо  этого  вы  заглушаете  метод  `answer()`,  чтобы  он  всегда  возвращал  `false`.
 
-Запустите тест, и вы увидите, что он не работает. Хорошо, что вы проверили это граничное условие! Чтобы исправить это, замените метод answer() следующим:
+Запустите тест, и вы увидите, что он не работает. Хорошо, что вы проверили это граничное условие! Чтобы исправить это, замените метод `answer()` следующим:
 
 ```kotlin 
 fun answer(question: Question, option: String) { 
@@ -217,9 +220,9 @@ fun answer(question: Question, option: String) {
 
 ## Рефакторинг
 
-Откройте класс игры. Обратите внимание, что этот класс знает о счете и списке вопросов.  При  запросе  ответа  на  вопрос  класс  Game  делегирует  это  классу Question  и  увеличивает  счет,  если  ответ  был  правильным.  Игра  также  может быть реорганизована, чтобы делегировать логику увеличения текущего счета и наивысшего результата новому классу Score.
+Откройте класс `Game`. Обратите внимание, что этот класс знает о счете и списке вопросов.  При  запросе  ответа  на  вопрос  класс  `Game`  делегирует  это  классу `Question`  и  увеличивает  счет,  если  ответ  был  правильным.  Игра  также  может быть реорганизована, чтобы делегировать логику увеличения текущего счета и наивысшего результата новому классу `Score`.
 
-Создайте класс Score в том же пакете, что и класс Game, со следующим содержимым:
+Создайте класс `Score` в том же пакете, что и класс `Game`, со следующим содержимым:
 
 ```kotlin 
 class Score(highestScore: Int = 0) { 
@@ -238,7 +241,7 @@ class Score(highestScore: Int = 0) {
 } 
 ```
 
-Теперь обновите класс Game, чтобы использовать этот новый класс:
+Теперь обновите класс `Game`, чтобы использовать этот новый класс:
 
 ```kotlin 
 class Game(
@@ -263,7 +266,7 @@ class Game(
 
 Запустите тесты еще раз и убедитесь, что все еще работает. 
 
-С этим изменением взгляните еще раз на следующие модульные тесты из GameUnitTests.kt:
+С этим изменением взгляните еще раз на следующие модульные тесты из `GameUnitTests.kt`:
 
 ```kotlin 
 @Test 
@@ -288,9 +291,9 @@ fun whenIncrementingScore_belowHighScore_shouldNotIncrementHighScore () {
 }
 ```
 
-При вызове game.incrementScore(), game.highestScore или game.currentScore из-за  рефакторинга  для  внутреннего  делегирования  зависимому  классу  Score  вы теперь выполняете интеграционные тесты. Вы увидите и узнаете о них больше в главе 8 «Интеграция».
+При вызове `game.incrementScore()`, `game.highestScore` или game.`currentScore` из-за  рефакторинга  для  внутреннего  делегирования  зависимому  классу  `Score`  вы теперь выполняете интеграционные тесты. Вы увидите и узнаете о них больше в главе 8 «Интеграция».
 
-Чтобы сохранить ваши тесты на уровне модулей, удалите эти тесты из GameUnitTests.kt и создайте новый файл с именем ScoreUnitTests.kt со следующим содержимым:
+Чтобы сохранить ваши тесты на уровне модулей, удалите эти тесты из `GameUnitTests.kt` и создайте новый файл с именем `ScoreUnitTests.kt` со следующим содержимым:
 
 ```kotlin 
 class ScoreUnitTests { 
@@ -321,7 +324,7 @@ class ScoreUnitTests {
 
 Запустите их, чтобы убедиться, что они проходят.
 
-С  этим  рефакторингом  единственным  методом,  который  все  еще  использует метод incrementScore() в вашем классе Game, является метод answer(). Давайте упростим  это.  Удалите  метод  incrementScore()  и  измените  метод  answer() следующим образом:
+С  этим  рефакторингом  единственным  методом,  который  все  еще  использует метод `incrementScore()` в вашем классе Game, является метод `answer()`. Давайте упростим  это.  Удалите  метод  `incrementScore()`  и  измените  метод  `answer()` следующим образом:
 
 ```kotlin
 fun answer(question: Question, option: String) { 
@@ -332,9 +335,9 @@ fun answer(question: Question, option: String) {
 }
 ```
 
-Теперь, поскольку вы удалили общедоступный метод scoreIncrement(), единственный способ увеличить счет в вашем классе Game — это отвечать на вопросы.
+Теперь, поскольку вы удалили общедоступный метод `scoreIncrement()`, единственный способ увеличить счет в вашем классе `Game` — это отвечать на вопросы.
 
-Затем откройте GameUnitTests.kt и посмотрите на следующие тесты:
+Затем откройте `GameUnitTests.kt` и посмотрите на следующие тесты:
 
 ```kotlin
 @Test 
@@ -353,13 +356,14 @@ fun `when answering incorrectly should not increment current score`() {
 	val question = mock<Question>() 
 	whenever(question.answer(anyString())).thenReturn(false) 
 	
-	val game = Game(listOf(question)) game.answer(question, "OPTION") 
+	val game = Game(listOf(question)) 
 	
+	game.answer(question, "OPTION") 	
 	Assert.assertEquals(0, game.currentScore) 
 }
 ```
 
-Вы  уже  догадались,  что  теперь  это  интеграционные  тесты.  Это  связано  с  тем, что  вы  утверждаете  game.currentScore,  который  внутренне  зависит  от  класса Score из вашего рефакторинга. Чтобы преобразовать их в модульные тесты, вам нужно будет изменить их, чтобы убедиться, что метод increment() в классе Score был или не был вызван. Для этого замените их на следующие:
+Вы  уже  догадались,  что  теперь  это  интеграционные  тесты.  Это  связано  с  тем, что  вы  вызываете метод  `game.currentScore`,  который  внутренне  зависит  от  класса `Score` из вашего рефакторинга. Чтобы преобразовать их в модульные тесты, вам нужно будет изменить их, чтобы убедиться, что метод `increment()` в классе `Score` был или не был вызван. Для этого замените их на следующие:
 
 ```kotlin
 @Test 
@@ -369,8 +373,9 @@ fun `when answering correctly should increment current score`() {
 	
 	val score = mock<Score>() 
 	
-	val game = Game(listOf(question), score) game.answer(question, "OPTION") 
+	val game = Game(listOf(question), score) 
 	
+	game.answer(question, "OPTION") 	
 	verify(score).increment() 
 } 
 
@@ -381,15 +386,16 @@ fun `when answering incorrectly should not increment current score`() {
 	
 	val score = mock<Score>() 
 	
-	val game = Game(listOf(question), score) game.answer(question, "OPTION") 
+	val game = Game(listOf(question), score) 
 	
+	game.answer(question, "OPTION") 	
 	verify(score, never()).increment() 
 }
 ```
 
-Вы  увидите,  что  сейчас  он  не  компилируется,  потому  что  вы  передаете  список вопросов и оценку конструктору класса Game, но пока он этого не поддерживает.
+Вы  увидите,  что  сейчас  он  не  компилируется,  потому  что  вы  передаете  список вопросов и счет конструктору класса `Game`, но пока он этого не поддерживает.
 
-Чтобы это исправить, откройте класс Game и измените конструктор на следующий:
+Чтобы это исправить, откройте класс `Game` и измените конструктор на следующий:
 
 ```kotlin
  class Game(
@@ -398,7 +404,7 @@ fun `when answering incorrectly should not increment current score`() {
 ) { 
 ```
 
-Как только это будет сделано, удалите старые свойства score, currentScore и highScore, так как они больше не нужны. Ваш измененный класс Game должен быть следующим:
+Как только это будет сделано, удалите старые свойства `score`, `currentScore` и `highScore`, так как они больше не нужны. Ваш измененный класс `Game` должен быть следующим:
 
 ```kotlin
 class Game(
@@ -431,7 +437,7 @@ class Game(
 
 ## Проверка по порядку
 
-Чтобы сохранить и получить высокий балл, вам нужно добавить функциональность в репозиторий. В представлении Project создайте новый пакет common>repository в разделе app>src>test>java>com>raywenderlich>android>cocktails. Создайте новый файл с именем RepositoryUnitTests.kt и добавьте следующий код:
+Чтобы сохранить и получить высокий балл, вам нужно добавить функциональность в репозиторий. В представлении `Project` создайте новый пакет `common>repository` в разделе `app>src>test>java>com>raywenderlich>android>cocktails`. Создайте новый файл с именем `RepositoryUnitTests.kt` и добавьте следующий код:
 
 ```kotlin
 class RepositoryUnitTests { 
@@ -450,7 +456,8 @@ class RepositoryUnitTests {
 		val repository = CocktailsRepositoryImpl(api, sharedPreferences) 
 		
 		// 2 
-		val score = 100 repository.saveHighScore(score) 
+		val score = 100 
+		repository.saveHighScore(score) 
 		
 		// 3 
 		inOrder(sharedPreferencesEditor) { 
@@ -467,12 +474,12 @@ class RepositoryUnitTests {
 
 Проходим каждый шаг по очереди:
 
-1.  Вы  собираетесь  сохранить  счет  в  CocktailsRepository  с  помощью SharedPreferences,  поэтому  вам  нужно  смоделировать  эту  зависимость  и  дать указание возвращать макет редактора всякий раз, когда запрашивается редактор.
-2. Выполните метод saveHighScore().
-3. Используйте inOrder, чтобы убедиться, что последующие проверки выполняются в точном порядке.
+1.  Вы  собираетесь  сохранить  счет  в  `CocktailsRepository`  с  помощью `SharedPreferences`,  поэтому  вам  нужно  смоделировать  эту  зависимость  и  дать указание возвращать макет редактора всякий раз, когда запрашивается редактор.
+2. Выполните метод `saveHighScore()`.
+3. Используйте `inOrder`, чтобы убедиться, что последующие проверки выполняются в точном порядке.
 4. Убедитесь, что счет сохранен правильно.
 
-Чтобы этот код скомпилировался, добавьте метод saveHighScore() в интерфейс CocktailsRepository.
+Чтобы этот код скомпилировался, добавьте метод `saveHighScore()` в интерфейс `CocktailsRepository`.
 
 ```kotlin
  interface CocktailsRepository { 
@@ -481,7 +488,7 @@ class RepositoryUnitTests {
 }
 ```
 
-Затем измените конструктор CocktailsRepositoryImpl, чтобы он принимал SharedPreferences в качестве параметра и переопределял метод saveHighScore():
+Затем измените конструктор `CocktailsRepositoryImpl`, чтобы он принимал `SharedPreferences` в качестве параметра и переопределял метод `saveHighScore()`:
 
 ```kotlin
 class CocktailsRepositoryImpl( 
@@ -495,7 +502,7 @@ class CocktailsRepositoryImpl(
 }
 ```
 
-Запустите тест и убедитесь, что он не работает. Чтобы это исправить, добавьте в класс CocktailsRepositoryImpl следующий код:
+Запустите тест и убедитесь, что он не работает. Чтобы это исправить, добавьте в класс `CocktailsRepositoryImpl` следующий код:
 
 ```kotlin
 private const val HIGH_SCORE_KEY = "HIGH_SCORE_KEY" 
@@ -512,7 +519,7 @@ class CocktailsRepositoryImpl(
 	}
 ```
 
-Это  добавляет  логику  к  вашему  методу  saveHighScore,  чтобы  сохранить  его  в sharedPreferences. Запустите тест еще раз, он пройдет.
+Это  добавляет  логику  к  вашему  методу  `saveHighScore`,  чтобы  сохранить  его  в `sharedPreferences`. Запустите тест еще раз, он пройдет.
 
 >[!success] commit #2
 
@@ -520,7 +527,7 @@ class CocktailsRepositoryImpl(
 
 ```kotlin
 @Test 
-fun getScore_shouldGetFromSharedPreferences() { 
+fun `get score should get from shared preferences`() { 
 	val api: CocktailsApi = mock() 
 	val sharedPreferences: SharedPreferences = mock() 
 	val repository = CocktailsRepositoryImpl(api, sharedPreferences) 
@@ -530,7 +537,7 @@ fun getScore_shouldGetFromSharedPreferences() {
 }
 ```
 
-Затем добавьте метод getHighScore() в CocktailsRepository и CocktailsRepositoryImpl:
+Затем добавьте метод `getHighScore()` в `CocktailsRepository` и `CocktailsRepositoryImpl`:
 
 ```kotlin
 interface CocktailsRepository { 
@@ -548,7 +555,7 @@ class CocktailsRepositoryImpl(
 	override fun getHighScore(): Int = 0
 ```
 
-Запустите тест, убедитесь, что он не прошел, а затем добавьте следующий код в класс CocktailsRepositoryImpl, чтобы убедиться, что он прошел успешно:
+Запустите тест, убедитесь, что он не прошел, а затем добавьте следующий код в класс `CocktailsRepositoryImpl`, чтобы убедиться, что он прошел успешно:
 
 ```kotlin
  override fun getHighScore() = sharedPreferences.getInt(HIGH_SCORE_KEY, 0)
@@ -558,7 +565,7 @@ class CocktailsRepositoryImpl(
 
 Если  вы  посмотрите  на  эти  два  теста,  вы  можете  заметить,  что  у  вас  есть некоторый код, который повторяется в обоих из них.
 
-Давайте  высушим  это,  сделаем рефакторинг  ваших  RepositoryUnitTests,  чтобы  он выглядел следующим образом:
+Давайте  высушим  это,  сделаем рефакторинг  ваших  `RepositoryUnitTests`,  чтобы  он выглядел следующим образом:
 
 ```kotlin
 class RepositoryUnitTests { 
@@ -605,7 +612,7 @@ class RepositoryUnitTests {
 
 ## Шпионаж
 
-Предположим, вы хотите сохранить счет только в том случае, если он выше ранее сохраненного счета. Для этого вы хотите начать с добавления следующего теста в свой класс RepositoryUnitTests:
+Предположим, вы хотите сохранить счет только в том случае, если он выше ранее сохраненного счета. Для этого вы хотите начать с добавления следующего теста в свой класс `RepositoryUnitTests`:
 
 ```kotlin
 @Test 
@@ -645,7 +652,7 @@ override fun saveHighScore(score: Int) {
 
 >[!success] commit #5
 
-Чтобы создавать игры для пользователя, вам понадобится фабрика для создания игры с вопросами, которая будет отображать коктейли, возвращаемые API. Создайте файл CocktailsGameFactoryUnitTests.kt в папке app > src > test > java > com > raywenderlich > android > Cocktails > game > factory. Добавьте следующий код:
+Чтобы создавать игры для пользователя, вам понадобится фабрика для создания игры с вопросами, которая будет отображать коктейли, возвращаемые API. Создайте файл `CocktailsGameFactoryUnitTests.kt` в папке app>src>test>java>com>raywenderlich>android > Cocktails > game > factory. Добавьте следующий код:
 
 ```kotlin
 class CocktailsGameFactoryUnitTests {  
@@ -822,14 +829,14 @@ override fun buildGame(
 
 ```kotlin
 @Test  
-fun buildGame_shouldGetHighScoreFromRepo() {  
+fun `buildGam  should get high score from repo`() {  
     setUpRepositoryWithCocktails(repository)  
     factory.buildGame(mock())  
     verify(repository).getHighScore()  
 }  
   
 @Test  
-fun buildGame_shouldBuildGameWithHighScore() {  
+fun `buildGame should build game with high score`() {  
   
     setUpRepositoryWithCocktails(repository)  
   
@@ -875,90 +882,92 @@ override fun buildGame(callback: CocktailsGameFactory.Callback) {
 Теперь создайте следующий тест, который проверяет, что фабрика создает игру, отображающую список коктейлей в список вопросов:
 
 ```kotlin
-@Test
-fun buildGame_shouldBuildGameWithQuestions() {
-    setUpRepositoryWithCocktails(repository)
-
-    factory.buildGame(object : CocktailsGameFactory.Callback {
-        override fun onSuccess(game: Game) {
-            cocktails.forEach {
-                assertQuestion(
-                    game.nextQuestion(),
-                    it.strDrink,
-                    it.strDrinkThumb
-                )
-            }
-        }
-
-        override fun onError() = Assert.fail()
-    })
-}
-
-private fun assertQuestion(
-    question: Question?,
-    correctOption: String,
-    imageUrl: String?
-) {
-    Assert.assertNotNull(question)
-    Assert.assertEquals (imageUrl, question?.imageUrl)
-    Assert.assertEquals(correctOption, question?.correctOption)
-    Assert.assertNotEquals(correctOption, question?.incorrectOption)
+@Test  
+fun `buildGame should build game with questions`() {  
+    setUpRepositoryWithCocktails(repository)  
+    
+    factory.buildGame(object : CocktailsGameFactory.Callback {  
+        override fun onSuccess(game: Game) {  
+            cocktails.forEach {  
+                assertQuestion(  
+                    game.nextQuestion(),  
+                    it.strDrink,   
+					it.strDrinkThumb  
+                )  
+            }  
+        }  
+  
+        override fun onError() = Assert.fail()  
+    })  
+}  
+  
+private fun assertQuestion(  
+    question: Question?,  
+    correctOption: String,  
+    imageUrl: String?  
+) {  
+    Assert.assertNotNull(question)   
+    Assert.assertEquals (imageUrl, question?.imageUrl)   
+    Assert.assertEquals(correctOption, question?.correctOption)   
+    Assert.assertNotEquals(correctOption, question?.incorrectOption)  
 }
 ```
 
 Здесь вы утверждаете, что изображение вопроса, которое будет отображаться в пользовательском интерфейсе, соответствует изображению коктейля, правильный вариант  соответствует  названию  напитка,  а  также  что  неправильный  вариант не является названием напитка.
 
-Если вы запустите это, тест не скомпилируется, поэтому добавьте свойство imageUrl в класс Question:
+Если вы запустите это, тест не скомпилируется, поэтому добавьте свойство `imageUrl` в класс `Question`:
 
 ```kotlin
 class Question(
-    val correctOption: String,
-    val incorrectOption: String,
-    val imageUrl: String? = null) { ...
+	val correctOption: String, 
+	val incorrectOption: String, 
+	val imageUrl: String? = null) { ...
 ```
 
 Теперь запустите тест, который компилируется, но теперь не работает. Чтобы он прошел, замените метод buildGame() следующим:
 
 ```kotlin
-override fun buildGame(callback: CocktailsGameFactory.Callback) {
+override fun buildGame(callback: CocktailsGameFactory.Callback) {  
 
     repository.getAlcoholic(
-
-        object : RepositoryCallback<List<Cocktail>, String> {
-
-            override fun onSuccess(cocktailList: List<Cocktail>) {
-                val questions = buildQuestions(cocktailList)
-                val score = Score(repository.getHighScore())
-                val game = Game(questions, score)
-                callback.onSuccess(game)
-            }
-
-            override fun onError(e: String) {
-                callback.onError()
-            }
-        })
-}
-
-private fun buildQuestions(cocktailList: List<Cocktail>)
-        = cocktailList.map { cocktail ->
-    val otherCocktail = cocktailList
-        .shuffled()
-        .first { it != cocktail }
-
-    Question(
-        cocktail.strDrink,
-        otherCocktail.strDrink,
-        cocktail.strDrinkThumb
-    )
-}
+    
+	    object : RepositoryCallback<List<Cocktail>, String> {  
+	        
+	        override fun onSuccess(cocktailList: List<Cocktail>) {  
+	            val questions = buildQuestions(cocktailList)  
+	            val score = Score(repository.getHighScore())  
+	            val game = Game(questions, score)  
+	            callback.onSuccess(game)  
+	        }  
+  
+        override fun onError(e: String) {  
+            callback.onError()  
+        }  
+    })  
+}  
+  
+private fun buildQuestions(cocktailList: List<Cocktail>) 
+	= cocktailList.map { cocktail ->  
+        val otherCocktail = cocktailList  
+            .shuffled()  
+            .first { it != cocktail }  
+        
+        Question(  
+            cocktail.strDrink,   
+			otherCocktail.strDrink,   
+			cocktail.strDrinkThumb  
+        )  
+    }
 ```
 
-Это  добавляет  метод  buildQuestions,  который  создает  серию  вопросов  для списка коктейлей. Это вызывается в обратном вызове onSuccess в buildGame, и результат передается в Game. Запустите тест еще раз, и он пройдет.
+Это  добавляет  метод  `buildQuestions`,  который  создает  серию  вопросов  для списка коктейлей. Это вызывается в обратном вызове onSuccess в `buildGame`, и результат передается в `Game`. Запустите тест еще раз, и он пройдет.
+
+>[!success] commit #9
 
 
 ## Тестирование ViewModel и LiveData
 
-Чтобы  обновить  пользовательский  интерфейс  с  вопросами,  оценкой,  а  также дать пользователю возможность взаимодействовать с параметрами вопроса, вы собираетесь  использовать  ViewModel  и  LiveData  из  компонентов  архитектуры Android.
+Чтобы  обновить  пользовательский  интерфейс  с  вопросами,  оценкой,  а  также дать пользователю возможность взаимодействовать с параметрами вопроса, вы собираетесь  использовать  `ViewModel`  и  `LiveData`  из  компонентов  архитектуры Android.
 
 Для  начала  добавьте  следующую  зависимость  в  свой  build.gradle  в  модуле приложения:
 
@@ -969,7 +978,7 @@ dependencies {
 }
 ```
 
-Затем создайте пакет с именем viewmodel в приложении > src > test > java > com >  raywenderlich  >  android  >  коктейль  >  игра.  Теперь  создайте  файл CocktailsGameViewModelUnitTests.kt  в  только  что  созданном  каталоге  модели представления, используя следующий код:
+Затем создайте пакет с именем viewmodel в app > src > test > java > com >  raywenderlich  >  android  >  coctails  >  game.  Теперь  создайте  файл `CocktailsGameViewModelUnitTests.kt`  в  только  что  созданном  каталоге  модели представления, используя следующий код:
 
 ```kotlin 
 class CocktailsGameViewModelUnitTests { 
@@ -978,7 +987,7 @@ class CocktailsGameViewModelUnitTests {
 }
 ```
 
-Возможно, вы заметили @get:Rule. Это тестовое правило. Правило тестирования — это инструмент, позволяющий изменить способ выполнения тестов, иногда добавляя дополнительные проверки или запуская код до и после ваших тестов. Компоненты архитектуры Android используют фоновый исполнитель, который является  асинхронным,  чтобы  творить  чудеса.  InstantTaskExecutorRule  —  это правило,  которое  меняет  этот  исполнитель  и  заменяет  его  синхронным.  Это гарантирует, что когда вы используете LiveData с ViewModel, все они выполняются синхронно в тестах.
+Возможно, вы заметили `@get:Rule`. Это тестовое правило. Правило тестирования — это инструмент, позволяющий изменить способ выполнения тестов, иногда добавляя дополнительные проверки или запуская код до и после ваших тестов. Компоненты архитектуры Android используют фоновый исполнитель, который является  асинхронным,  чтобы  творить  чудеса.  `InstantTaskExecutorRule`  —  это правило,  которое  меняет  этот  исполнитель  и  заменяет  его  синхронным.  Это гарантирует, что когда вы используете `LiveData` с `ViewModel`, все они выполняются синхронно в тестах.
 
 Теперь, когда у вас есть тестовый каркас, добавьте в тестовый файл следующее:
 
@@ -1017,14 +1026,14 @@ fun setup() {
 
 В приведенном выше:
 
-1. Для вашей ViewModel потребуется CocktailsRepository для сохранения рекорда и CocktailsGameFactory для создания игры. Это зависимости, поэтому вам нужно издеваться над ними.
-2. Вы будете использовать мокап Game, чтобы заглушить некоторые из его методов и убедиться, что вы вызываете на нем методы.
-3.  Вам  нужно  несколько  фиктивных  наблюдателей,  потому  что  Activity  будет наблюдать  за  объектами  LiveData,  предоставляемыми  ViewModel.  В пользовательском  интерфейсе  вы  будете  показывать  загрузку  при  получении коктейлей  из  API  и  представление  ошибок,  если  есть  ошибка  при  получении коктейлей, обновлений результатов и вопросов. Поскольку здесь нет жизненного цикла, вы можете использовать методObservForever().
+1. Для вашей `ViewModel` потребуется `CocktailsRepository` для сохранения рекорда и `CocktailsGameFactory` для создания игры. Это зависимости, поэтому вам нужно издеваться над ними.
+2. Вы будете использовать мокап `Game`, чтобы заглушить некоторые из его методов и убедиться, что вы вызываете на нем методы.
+3.  Вам  нужно  несколько  фиктивных  наблюдателей,  потому  что  `Activity`  будет наблюдать  за  объектами  `LiveData`,  предоставляемыми  `ViewModel`.  В пользовательском  интерфейсе  вы  будете  показывать  загрузку  при  получении коктейлей  из  `API`  и  представление  ошибок,  если  есть  ошибка  при  получении коктейлей, обновлений результатов и вопросов. Поскольку здесь нет жизненного цикла, вы можете использовать метод `ObservForever()`.
 
->[!NOTE]
-**Примечание**. Обязательно импортируйте файл androidx.lifecycle.Observer.
+>[!NOTE] **Примечание**
+>Обязательно импортируйте файл androidx.lifecycle.Observer.
 
-Чтобы скомпилировать тест, создайте класс в разделе app > src > main > java > com  >  raywenderlich  >  android  >  Cocktails  >  game  >  viewmodel  с  именем CocktailsGameViewModel со следующим содержимым:
+Чтобы скомпилировать тест, создайте класс в разделе app > src > main > java > com  >  raywenderlich  >  android  >  Cocktails  >  game  >  viewmodel  с  именем `CocktailsGameViewModel` со следующим содержимым:
 
 ```kotlin 
 class CocktailsGameViewModel(  
@@ -1046,7 +1055,7 @@ class CocktailsGameViewModel(
 }
 ```
 
-Затем добавьте в CocktailsGameViewModelUnitTests.kt следующие методы:
+Затем добавьте в `CocktailsGameViewModelUnitTests.kt` следующие методы:
 
 ```kotlin 
 private fun setUpFactoryWithSuccessGame(game: Game) {  
@@ -1064,19 +1073,19 @@ private fun setUpFactoryWithError() {
 }
 ```
 
-Вы будете использовать эти методы для заглушки метода buildGame() из класса CocktailsGameFactory.
+Вы будете использовать эти методы для заглушки метода `buildGame()` из класса `CocktailsGameFactory`.
 
 Теперь добавьте следующий тест:
 
 ```kotlin 
 @Test 
-fun init_shouldBuildGame() { 
+fun `init should build game`() { 
 	viewModel.initGame() 
 	verify(factory).buildGame(any()) 
 }
 ```
 
-Здесь вы проверяете, что вызов initGame для ViewModel вызовет buildGame из фабрики. Наконец,  добавьте  соответствующую  реализацию  в  CocktailsGameViewModel, чтобы тест скомпилировался:
+Здесь вы проверяете, что вызов `initGame` для `ViewModel` вызовет `buildGame` из фабрики. Наконец,  добавьте  соответствующую  реализацию  в  `CocktailsGameViewModel`, чтобы тест скомпилировался:
 
 ```kotlin 
 fun initGame() { 
@@ -1103,6 +1112,8 @@ fun initGame() {
 ```
 
 Запустите тест еще раз, и он пройдет.
+
+>[!success] commit #10
 
 Вы  захотите  показать  окно  загрузки  и  удалить  окно  ошибок  при  сборке  игры. Для начала добавьте следующие тесты в CocktailsGameViewModelUnitTests.kt:
 

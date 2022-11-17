@@ -160,4 +160,27 @@ class CocktailsGameViewModelUnitTests {
         viewModel.nextQuestion()
         verify(questionObserver).onChanged(eq(question2))
     }
+
+    // Ответ  на  вопрос должен  делегироваться  методу answer() игры,
+    // сохранять  высокий  балл  и показывать  следующий  вопрос
+    // и  балл  —  в  указанном  порядке
+    @Test
+    fun `answer Question should Delegate To Game save High Score show Question And Score`() {
+        val score = mock<Score>()
+
+        val question = mock<Question>()
+        whenever(game.score).thenReturn(score)
+
+        setUpFactoryWithSuccessGame(game)
+
+        viewModel.initGame()
+        viewModel.answerQuestion(question, "VALUE")
+
+        inOrder(game, repository, questionObserver, scoreObserver) {
+            verify(game).answer(eq(question), eq("VALUE"))
+            verify(repository).saveHighScore(any())
+            verify(scoreObserver).onChanged(eq(score))
+            verify(questionObserver).onChanged(eq(question))
+        }
+    }
 }

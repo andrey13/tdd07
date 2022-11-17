@@ -3,7 +3,6 @@ package com.raywenderlich.android.cocktails.game.factory
 import com.raywenderlich.android.cocktails.common.network.Cocktail
 import com.raywenderlich.android.cocktails.common.repository.CocktailsRepository
 import com.raywenderlich.android.cocktails.common.repository.RepositoryCallback
-import com.raywenderlich.android.cocktails.game.CocktailsGameFactory
 import com.raywenderlich.android.cocktails.game.CocktailsGameFactoryImpl
 import com.raywenderlich.android.cocktails.game.model.Game
 import com.raywenderlich.android.cocktails.game.model.Question

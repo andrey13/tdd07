@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.raywenderlich.android.cocktails.common.repository.CocktailsRepository
-import com.raywenderlich.android.cocktails.game.CocktailsGameFactory
+import com.raywenderlich.android.cocktails.game.factory.CocktailsGameFactory
 import com.raywenderlich.android.cocktails.game.model.Game
 import com.raywenderlich.android.cocktails.game.model.Question
 import com.raywenderlich.android.cocktails.game.model.Score

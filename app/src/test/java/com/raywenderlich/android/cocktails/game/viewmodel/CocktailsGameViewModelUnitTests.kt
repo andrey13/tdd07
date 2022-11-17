@@ -118,4 +118,16 @@ class CocktailsGameViewModelUnitTests {
         viewModel.initGame()
         verify(loadingObserver).onChanged(eq(false))
     }
+
+    // Еще одно требование — показать счет при построении игры.
+    @Test
+    fun `init should Show Score when Factory Returns Success`() {
+        val score = mock<Score>()
+        whenever(game.score).thenReturn(score)
+
+        setUpFactoryWithSuccessGame(game)
+
+        viewModel.initGame()
+        verify(scoreObserver).onChanged(eq(score))
+    }
 }

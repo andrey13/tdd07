@@ -1243,6 +1243,8 @@ override fun onSuccess(game: Game) {
 
 Запустите тест и убедитесь, что он проходит. 
 
+>[!success] commit #14
+
 Вы  захотите  показать  первый  вопрос,  когда  игра  будет  построена.  Начните  с добавления этого теста:
 
 ```kotlin 
@@ -1250,7 +1252,9 @@ override fun onSuccess(game: Game) {
 fun `init should Show First Question when Factory Returns Success`() {  
     val question = mock<Question>()  
     whenever(game.nextQuestion()).thenReturn(question)  
+    
     setUpFactoryWithSuccessGame(game)  
+    
     viewModel.initGame()  
     verify(questionObserver).onChanged(eq(question))  
 }

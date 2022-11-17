@@ -20,6 +20,7 @@ class CocktailsGameViewModel(
     private val errorLiveData = MutableLiveData<Boolean>()
     private val questionLiveData = MutableLiveData<Question>()
     private val scoreLiveData = MutableLiveData<Score>()
+    private var game: Game? = null
 
     fun getLoading(): LiveData<Boolean> = loadingLiveData
     fun getError(): LiveData<Boolean> = errorLiveData
@@ -36,7 +37,9 @@ class CocktailsGameViewModel(
                 loadingLiveData.value = false
                 errorLiveData.value = false
                 scoreLiveData.value = game.score
-                questionLiveData.value = game.nextQuestion()
+                //questionLiveData.value = game.nextQuestion()
+                this@CocktailsGameViewModel.game = game
+                nextQuestion()
             }
 
             override fun onError() {
@@ -44,5 +47,12 @@ class CocktailsGameViewModel(
                 errorLiveData.value = true
             }
         })
+    }
+
+    fun nextQuestion() {
+        game?.let {
+            questionLiveData.value = it.nextQuestion()
+        }
+
     }
 }

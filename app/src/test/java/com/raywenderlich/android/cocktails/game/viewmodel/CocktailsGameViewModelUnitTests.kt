@@ -142,4 +142,22 @@ class CocktailsGameViewModelUnitTests {
         viewModel.initGame()
         verify(questionObserver).onChanged(eq(question))
     }
+
+    //Вы захотите показать следующий вопрос при вызове nextQuestion
+    // Здесь вы заглушаете метод nextQuestion() из Game,
+    // чтобы сначала вернуть question1, а затем question2.
+    @Test
+    fun `next Question should Show Question`() {
+        val question1 = mock<Question>()
+        val question2 = mock<Question>()
+
+        whenever(game.nextQuestion())
+            .thenReturn(question1)
+            .thenReturn(question2)
+
+        setUpFactoryWithSuccessGame(game)
+        viewModel.initGame()
+        viewModel.nextQuestion()
+        verify(questionObserver).onChanged(eq(question2))
+    }
 }

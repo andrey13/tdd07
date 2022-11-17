@@ -33,7 +33,8 @@ class CocktailsGameViewModel(
 
         factory.buildGame(object : CocktailsGameFactory.Callback {
             override fun onSuccess(game: Game) {
-                // TODO
+                loadingLiveData.value = false
+                errorLiveData.value = false
             }
 
             override fun onError() {

@@ -98,4 +98,24 @@ class CocktailsGameViewModelUnitTests {
         viewModel.initGame()
         verify(loadingObserver).onChanged(eq(false))
     }
+
+    // Другой  сценарий,  который  вы  захотите  рассмотреть,  —  это  скрытие  ошибки
+    // и загрузка представлений, когда фабрика успешно создает игру.
+    // Здесь вы дважды проверяете, что ошибка имеет значение false.
+    // Первое значение `false`  устанавливается  перед  вызовом
+    // репозитория  для  сборки  игры
+    @Test
+    fun `init should Hide Error when Factory Returns Success`() {
+        setUpFactoryWithSuccessGame(game)
+        viewModel.initGame()
+        verify(errorObserver, times(2)).onChanged(eq(false))
+    }
+
+    // а  второе устанавливается, когда игра не может быть собрана из-за ошибки
+    @Test
+    fun `init should Hide Loading when Factory Returns Success`() {
+        setUpFactoryWithSuccessGame(game)
+        viewModel.initGame()
+        verify(loadingObserver).onChanged(eq(false))
+    }
 }

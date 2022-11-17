@@ -61,9 +61,26 @@ class CocktailsGameViewModelUnitTests {
         }.whenever(factory).buildGame(any())
     }
 
+    // Здесь вы проверяете, что вызов initGame для ViewModel вызовет buildGame из фабрики
     @Test
     fun `init should build game`() {
         viewModel.initGame()
         verify(factory).buildGame(any())
     }
+
+    // В обоих тестах вы проверяете, что initGame публикует правильные данные.
+    // Когда программа отправляет значение в LiveData, объект вызывает onChanged()
+    // со значением. Это функция, которую вы проверяете.
+    @Test
+    fun `init should Show Loading`() {
+        viewModel.initGame()
+        verify(loadingObserver).onChanged(eq(true))
+    }
+
+    @Test
+    fun `init should Hide Error`() {
+        viewModel.initGame()
+        verify(errorObserver).onChanged(eq(false))
+    }
+
 }

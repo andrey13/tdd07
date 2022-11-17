@@ -37,7 +37,8 @@ class CocktailsGameViewModel(
             }
 
             override fun onError() {
-                // TODO
+                loadingLiveData.value = false
+                errorLiveData.value = true
             }
         })
     }

@@ -83,4 +83,19 @@ class CocktailsGameViewModelUnitTests {
         verify(errorObserver).onChanged(eq(false))
     }
 
+    // Вы также захотите показать окно с ошибкой и перестать показывать окно загрузки,
+    // когда  возникнет  проблема  со  сборкой  игры.
+    @Test
+    fun `init should Show Error when Factory Returns Error`() {
+        setUpFactoryWithError()
+        viewModel.initGame()
+        verify(errorObserver).onChanged(eq(true))
+    }
+
+    @Test
+    fun `init should Hide Loading when Factory Returns Error`() {
+        setUpFactoryWithError()
+        viewModel.initGame()
+        verify(loadingObserver).onChanged(eq(false))
+    }
 }

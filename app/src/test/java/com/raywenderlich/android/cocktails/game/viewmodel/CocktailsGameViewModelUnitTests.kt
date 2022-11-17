@@ -130,4 +130,16 @@ class CocktailsGameViewModelUnitTests {
         viewModel.initGame()
         verify(scoreObserver).onChanged(eq(score))
     }
+
+    // Вы  захотите  показать  первый  вопрос,  когда  игра  будет  построена
+    @Test
+    fun `init should Show First Question when Factory Returns Success`() {
+        val question = mock<Question>()
+        whenever(game.nextQuestion()).thenReturn(question)
+
+        setUpFactoryWithSuccessGame(game)
+
+        viewModel.initGame()
+        verify(questionObserver).onChanged(eq(question))
+    }
 }
